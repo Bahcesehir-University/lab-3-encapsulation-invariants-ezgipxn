@@ -34,8 +34,8 @@ public:
     // Throw std::invalid_argument if value < -273.15
     explicit Temperature(double celsius) {
         // TODO: Validate and set celsius_
-        if(celsius < -273.15){
-            throw invalid_argument("Invalid temperature");
+        if (celsius < -273.15){
+            throw invalid_argument("Temperature cannot be below absoulte zero.");
         }
         celsius_ = celsius;
     }
@@ -43,7 +43,7 @@ public:
     // Getter: return the temperature in Celsius
     double getCelsius() const {
         // TODO: Implement
-        return -celsius_;
+        return celsius_;
     }
 
     // Getter: return the temperature converted to Fahrenheit
@@ -58,9 +58,8 @@ public:
     // Throw std::invalid_argument if value < -273.15
     void setCelsius(double celsius) {
         // TODO: Implement
-        if(celsius < -273.15){
-            throw invalid_argument("Invalid temperature");
-            
+        if (celsius < -273.15){
+            throw invalid_argument("Temperature cannot be below absoulte zero.");
         }
         celsius_ = celsius;
     }
@@ -82,13 +81,12 @@ public:
     // Constructor: initialize with owner name and starting balance.
     // Throw std::invalid_argument if owner is empty or balance < 0
     BankAccount(const string& owner, double initialBalance) {
-        // TODO: Validate and set members
-        if(owner.empty()){
-            throw invalid_argument("Invalid name");
-            
+        // TODO: Validate and set members .empty()
+        if( owner.empty()){
+            throw invalid_argument("Owner name cannot be empty.");
         }
         if(initialBalance < 0){
-            throw invalid_argument("Invalid balance");
+            throw invalid_argument("Initial balance cannot be negative.");
         }
         owner_ = owner;
         balance_ = initialBalance;
@@ -111,24 +109,24 @@ public:
     // Throw std::invalid_argument if amount <= 0
     void deposit(double amount) {
         // TODO: Implement
-         if(amount <= 0){
-             throw invalid_argument("Amount must be positive");
-    }
-    balance_+=amount;
+        if(amount <= 0){
+            throw invalid_argument("Deposit amount must be positive");
+        }
+        balance_ +=amount;
     }
 
     // Withdraw money from the account.
     // Throw std::invalid_argument if amount <= 0
     // Throw std::runtime_error if insufficient funds
     void withdraw(double amount) {
-         if(amount <= 0){
+        // TODO: Implement
+        if(amount <= 0){
             throw invalid_argument("Withdrawal amount must be positive");
         }
         if(amount > balance_){
             throw runtime_error("Insufficient funds");
         }
-    balance_ -=amount;
-        // TODO: Implement
+        balance_ -= amount;
     }
 
     // Transfer money from this account to another.
@@ -136,10 +134,10 @@ public:
     // Throw std::runtime_error if insufficient funds
     void transfer(BankAccount& other, double amount) {
         // TODO: Implement using withdraw() and deposit()
-         if(amount <= 0){
+        if (amount <= 0){
             throw invalid_argument("Transfer amount must be positive");
         }
-        withdraw(amount); 
+        withdraw(amount);
         other.deposit(amount);
     }
 };
@@ -158,8 +156,8 @@ private:
     // Helper: check if a string contains at least one digit
     static bool hasDigit(const string& s) {
         // TODO: Implement
-        for( char c : s){
-            if( c >= '0' && c <= '9'){
+        for (char c : s ){
+            if (c >= '0' && c <= '9'){
                 return true;
             }
         }
@@ -170,8 +168,8 @@ private:
     static void validate(const string& pwd) {
         // TODO: Check length >= 8 and hasDigit
         // Throw std::invalid_argument with descriptive message if invalid
-        if(pwd.length() < 8 ){
-            throw invalid_argument("Password must contain at least 8 digits");
+        if (pwd.length() < 8 ){
+            throw invalid_argument("password must be atleast 8 characters long");
         }
         if(!hasDigit(pwd)){
             throw invalid_argument("Password must contain at least one digit");
@@ -192,14 +190,12 @@ public:
     // Throw std::invalid_argument if newPassword fails validation
     void change(const string& oldPassword, const string& newPassword) {
         // TODO: Implement
-        if(oldPassword != password_){
-            throw invalid_argument("Doesn't match");
+        if (oldPassword != password_){
+            throw invalid_argument("oldPassword doesn't match");
         }
         validate(newPassword);
         password_ = newPassword;
-        }
-    
-    
+    }
 
     // Check if a given string matches the stored password.
     bool matches(const string& attempt) const {
